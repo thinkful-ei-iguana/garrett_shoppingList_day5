@@ -73,7 +73,7 @@ function getItemIdFromElement(item) {
 }
 
 function handleItemCheckClicked() {
-  $('.js-shopping-list').on('click', `.js-item-toggle`, event => {
+  $('.js-shopping-list').on('click', '.js-item-toggle', event => {
     console.log('`handleItemCheckClicked` ran');
     const id = getItemIdFromElement(event.currentTarget);
     toggleCheckedForListItem(id);
@@ -81,11 +81,20 @@ function handleItemCheckClicked() {
   });
 }
 
+function deleteItemFromShoppingList(itemId) {
+  console.log(`Deleting item with id ${itemId} from shopping list`);
+  const itemIndex = STORE.findIndex(item => item.id === itemId);
+  STORE.splice(itemIndex, 1);
+}
+
 
 function handleDeleteItemClicked() {
-  // this function will be responsible for when users want to delete a shopping list
-  // item
-  console.log('`handleDeleteItemClicked` ran')
+  $('.js-shopping-list').on('click', '.js-item-delete', event => {
+    const itemIndex = getItemIdFromElement(event.currentTarget);
+    deleteItemFromShoppingList(itemIndex);
+    renderShoppingList();
+  });
+  console.log('`handleDeleteItemClicked` ran');
 }
 
 // this function will be our callback when the page loads. it's responsible for
